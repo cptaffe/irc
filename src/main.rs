@@ -42,22 +42,14 @@ impl<T: Iterator> StateMachine<T> {
 
 struct MsgState;
 
-impl MsgState {
-	fn new()->MsgState { MsgState }
-}
-
 impl<T: Iterator<Item=char>> State<T> for MsgState {
 	fn next(&self, sc: &Scanner<T>)->Option<Box<State<T>>> {
 		println!("msgstate!");
-		Some(Box::new(TestState::new()))
+		Some(Box::new(TestState))
 	}
 }
 
 struct TestState;
-
-impl TestState {
-	fn new()->TestState { TestState }
-}
 
 impl<T: Iterator<Item=char>> State<T> for TestState {
 	fn next(&self, sc: &Scanner<T>)->Option<Box<State<T>>> {
@@ -67,5 +59,5 @@ impl<T: Iterator<Item=char>> State<T> for TestState {
 }
 
 fn main() {
-	StateMachine::new(Box::new(MsgState::new()), Scanner::new("hello".chars().peekable())).run();
+	StateMachine::new(Box::new(MsgState), Scanner::new("hello".chars().peekable())).run();
 }
